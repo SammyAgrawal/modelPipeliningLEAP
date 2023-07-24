@@ -53,6 +53,7 @@ def load_vars_xarray(input_vars, output_vars, downsample=True, chunks = True):
     ds_grid = xr.open_dataset(mapper, engine='zarr')
     lat = ds_grid.lat.values.round(2) 
     lon = ds_grid.lon.values.round(2)  
+    lon = ((lon + 180) % 360) - 180 # convert from 0-360 to -180 to 180
     
     ds['lat'] = (('ncol'),lat.T)
     ds['lon'] = (('ncol'),lon.T)
